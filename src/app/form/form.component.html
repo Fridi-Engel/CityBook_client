@@ -1,0 +1,79 @@
+<mat-card>
+    <button mat-raised-button routerLink="/app-instructions">To instructions</button><br />
+<p></p>
+    <form [formGroup]="profileForm" #myForm="ngForm">
+        <mat-form-field appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" required>
+            <mat-error align="left">Please enter only letters</mat-error>
+        </mat-form-field><br />
+        <mat-form-field appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" required>
+            <mat-error align="left">Please enter only letters</mat-error>
+        </mat-form-field><br />
+        <mat-form-field appearance="fill">
+            <mat-label>Id Number</mat-label>
+            <input matInput formControlName="idNumber" #input maxlength="9" minlength="9" required>
+            <mat-hint align="end">{{input.value?.length || 0}}/9</mat-hint>
+            <mat-error align="left">Please enter only numbers</mat-error>
+        </mat-form-field><br />
+        <mat-form-field appearance="fill">
+            <mat-label>Date of birth</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" [max]="maxDate" [(ngModel)]="minDate"
+                #input required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field><br />
+        <mat-form-field appearance="fill">
+            <mat-label>Choose who are you</mat-label>
+            <mat-select formControlName="min" required>
+                <mat-option value="male">Male</mat-option>
+                <mat-option value="female">Female</mat-option>
+            </mat-select>
+        </mat-form-field><br />
+        <mat-form-field appearance="fill">
+            <mat-label>HMO</mat-label>
+            <mat-select formControlName="hmo" required>
+                <mat-option value="macabi">Macabi</mat-option>
+                <mat-option value="leumi">Leumi</mat-option>
+                <mat-option value="clalit">Clalit</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div formArrayName="children">
+            <div *ngIf="children()">
+                <div *ngFor="let child of children().controls;let i=index">
+                    <div [formGroupName]="i">
+                        <mat-label>Child {{i+1}}</mat-label><br />
+                        <mat-form-field appearance="fill">
+                            <mat-label>Name</mat-label>
+                            <mat-error align="left">Please enter only letters</mat-error>
+                            <input matInput formControlName="Name" #input required>
+                        </mat-form-field><br />
+                        <mat-form-field appearance="fill">
+                            <mat-label>Id Number</mat-label>
+                            <input matInput formControlName="Idnumber" #input maxlength="9" minlength="9" required>
+                            <mat-hint align="end">{{input.value?.length || 0}}/9</mat-hint>
+                            <mat-error align="left">Please enter only numbers</mat-error>
+                        </mat-form-field><br />
+                        <mat-form-field appearance="fill">
+                            <mat-label>Date of birth</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="DateOfBirth" [min]="minDate"
+                                [max]="maxDate" #input required>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error align="left">Please enter a date later than the parent's date of birth
+                            </mat-error>
+                        </mat-form-field><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button mat-raised-button (click)="addChild()">Add child</button><br /><br />
+
+        <button mat-raised-button type="submit" (click)="save()" [disabled]="!myForm.form.valid">Save</button>
+        <button mat-raised-button id="b1"(click)="newForm()">New form</button><br />
+
+    </form>
+</mat-card>

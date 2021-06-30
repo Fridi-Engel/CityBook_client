@@ -1,0 +1,10 @@
+<mat-card>
+    
+<h1>Hi <span *ngIf="user.FirstName&&user.LastName">{{user.FirstName}} {{user.LastName}}</span></h1>
+<div>
+    Please fill out the form
+</div>
+<br/>
+<button mat-raised-button  routerLink="/form">To the form</button>
+
+</mat-card>
